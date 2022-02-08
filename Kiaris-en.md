@@ -1,5 +1,5 @@
 layout: page
 title: "Support Kiaris"
-permalink: /Kiaris/en/
+permalink: /Kiaris/
 
 # Kiaris support test
