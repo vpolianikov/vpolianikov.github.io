@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Another page
+title: Support - Kiaris
 description: This is just another page
-permalink: /test/ru
+permalink: /Kiaris/en
 ---
 
 ## Welcome to another page
