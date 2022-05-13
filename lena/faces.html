@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Faces</title>
+    <style>
+
+        .img_bg {
+            z-index: -1;
+            position: absolute;
+        }
+
+        .img_overlay {
+            transition: 800ms ease-in-out;
+            opacity: 1;
+        }
+
+        :root {
+            --grid-cols: 1;
+            --grid-rows: 1;
+        }
+
+        .img_overlay:hover {
+            opacity: 0;
+        }
+
+        #container {
+            display: grid;
+            grid-gap: 1em;
+            grid-template-rows: repeat(var(--grid-rows), 1fr);
+            grid-template-columns: repeat(var(--grid-cols), 1fr);
+            width: fit-content;
+            height: fit-content;
+            margin: 16px;
+        }
+
+        .grid-item {
+            padding: 1em;
+            /*border: 1px solid #ddd;*/
+            text-align: center;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="swap()">▲▼ swap</button>
+    <br />
+
+    <div id="container">
+    </div>
+
+    <br />
+    <a href="https://boosty.to/lenafekhner">artist</a>
+
+    <script>
+        const imgcount = 10;
+        const maxinrow = 4;
+        const orig_dir = "original";
+        const draw_dir = "draw";
+
+        const container = document.getElementById("container");
+        let grid = [];
+        let img_swap = false;
+
+        function makeRows() {
+            container.innerHTML = "";
+            rows = parseInt(imgcount / maxinrow) + 1;
+
+            container.style.setProperty('--grid-rows', rows);
+            container.style.setProperty('--grid-cols', maxinrow);
+
+            let orig = img_swap ? draw_dir : orig_dir;
+            let draw = img_swap ? orig_dir : draw_dir;
+
+            for (c = 0; c < imgcount; c++) {
+                let cell = document.createElement("div");
+                grid.push(cell);
+
+                cell.innerHTML = '<img src="' + orig + '/' + c + '.jpg" class="img_bg"><img src="' + draw + '/' + c + '.jpg" class="img_overlay">';
+                container.appendChild(cell).className = "grid-item";
+            };
+        };
+
+        function swap() {
+            img_swap = !img_swap;
+            makeRows();
+        }
+
+        function start() {
+            makeRows();
+        }
+
+        start();
+    </script>
+</body>
+</html> 
