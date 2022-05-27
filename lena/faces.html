@@ -30,21 +30,23 @@
 
         #container {
             display: grid;
-            grid-gap: 1em;
+            /*grid-gap: 1em;*/
             grid-template-rows: repeat(var(--grid-rows), 1fr);
             grid-template-columns: repeat(var(--grid-cols), 1fr);
             width: fit-content;
             height: fit-content;
-            margin: 10px;
+            margin: 16px;
         }
 
         .grid-item {
-            padding: 1em;
-            /*border: 1px solid #ddd;*/
-            /*text-align: center;*/
+            /*padding: 1em;*/
+            border: 1px solid #ddd;
             position: relative;
             width: 240px;
             height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
@@ -60,7 +62,7 @@
 
     <script>
         const imgcount = 20;
-        const maxinrow = 4;
+        const maxinrow = 5;
         const orig_dir = "original";
         const draw_dir = "draw";
 
@@ -85,7 +87,7 @@
                 cell.innerHTML = '<img src="' + orig + '/' + c + '.jpg" class="img img_bg"><img src="' + draw + '/' + c + '.jpg" class="img img_overlay">';
                 container.appendChild(cell).className = "grid-item";
             };
-        };
+        }
 
         function swap() {
             img_swap = !img_swap;
