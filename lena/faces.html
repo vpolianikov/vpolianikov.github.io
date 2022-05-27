@@ -11,7 +11,7 @@
 
         .img_overlay {
             transition: 800ms ease-in-out;
-            opacity: 1;
+            opacity: 0;
         }
 
         .img {
@@ -25,7 +25,7 @@
         }
 
         .img_overlay:hover {
-            opacity: 0;
+            opacity: 1;
         }
 
         #container {
@@ -35,14 +35,16 @@
             grid-template-columns: repeat(var(--grid-cols), 1fr);
             width: fit-content;
             height: fit-content;
-            margin: 16px;
+            margin: 10px;
         }
 
         .grid-item {
             padding: 1em;
             /*border: 1px solid #ddd;*/
-            text-align: center;
+            /*text-align: center;*/
             position: relative;
+            width: 240px;
+            height: 320px;
         }
     </style>
 </head>
@@ -64,7 +66,7 @@
 
         const container = document.getElementById("container");
         let grid = [];
-        let img_swap = false;
+        let img_swap = true;
 
         function makeRows() {
             container.innerHTML = "";
