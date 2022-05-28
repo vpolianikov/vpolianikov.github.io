@@ -5,13 +5,13 @@
     <style>
 
         .img_bg {
-            z-index: -1;
             position: absolute;
         }
 
         .img_overlay {
             transition: 800ms ease-in-out;
             opacity: 0;
+            z-index: 1;
         }
 
         .img {
@@ -35,7 +35,11 @@
             grid-template-columns: repeat(var(--grid-cols), 1fr);
             width: fit-content;
             height: fit-content;
-            margin: 16px;
+        }
+
+        body {
+            max-width: max-content;
+            margin: auto;
         }
 
         .grid-item {
@@ -47,11 +51,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: white;
         }
     </style>
 </head>
-<body>
-    <button onclick="swap()">▲▼ swap</button>
+<body style="background-color: #24292E;">
+    <button style="margin: 16px" onclick="swap()">▲▼ swap</button>
     <br />
 
     <div id="container">
