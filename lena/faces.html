@@ -129,12 +129,11 @@
                 let img = images[key];
 
                 if (positive_tags.length > 0) {
-                    let skip = true;
+                    let skip = false;
 
                     for (let tag of positive_tags) {
-                        if (tags[tag].includes(img.id)) {
-                            skip = false;
-                            console.log("skip = false");
+                        if (!tags[tag].includes(img.id)) {
+                            skip = true;
                             break;
                         }
                     }
