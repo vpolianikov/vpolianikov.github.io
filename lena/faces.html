@@ -53,12 +53,22 @@
             justify-content: center;
             background-color: white;
         }
+
+        .tag-item {
+            text-decoration: underline;
+            margin-right: 12px;
+        }
     </style>
 </head>
 <body style="background-color: #24292E;">
-    <button style="margin: 16px" onclick="swap()">▲▼ swap</button>
-    <br />
-
+    <div style="margin-top:16px; margin-bottom:18px">
+        <button style="margin-right: 6px" id="swap" onclick="swap()">👤 Фото/Изображения</button>
+        <button style="margin-right: 6px" id="swap" onclick="shuffle()">▲▼ Перемешать</button>
+        <span>|</span>
+        <button style="margin-left: 6px" id="swap" onclick="start()">Сбросить</button>
+    </div>
+    <div id="tags" style="margin-bottom: 24px; color: #DCDCDC;">
+    </div>
     <div id="container">
     </div>
 
@@ -72,8 +82,41 @@
         const draw_dir = "draw";
 
         const container = document.getElementById("container");
-        let grid = [];
+        const tags_div = document.getElementById("tags");
+
         let img_swap = true;
+        let images = [];
+
+        let positive_tags = [];
+        let negative_tags = [];
+
+        const tags = {
+            "пожилой": [13, 27, 28],
+            "головной убор": [13, 26],
+        };
+
+        function updateTags() {
+            tags_div.innerHTML = '<span style="margin-right: 8px">Тэги:</span>';
+
+            for (let key in tags) {
+                //let tag = tags[key];
+                let span = document.createElement("a");
+                span.innerText = key;
+                span.href = "javascript:swapTag('" + key + "')";
+
+                if (positive_tags.includes(key)) {
+                    span.style = "color:#28a745;";
+                }
+                else if (negative_tags.includes(key)) {
+                    span.style = "color:#dc3545;";
+                }
+                else {
+                    span.style = "color:#DCDCDC;";
+                }
+
+                tags_div.appendChild(span).className = "tag-item";
+            }
+        }
 
         function makeRows() {
             container.innerHTML = "";
@@ -82,16 +125,45 @@
             container.style.setProperty('--grid-rows', rows);
             container.style.setProperty('--grid-cols', maxinrow);
 
-            let orig = img_swap ? draw_dir : orig_dir;
-            let draw = img_swap ? orig_dir : draw_dir;
+            for (let key in images) {
+                let img = images[key];
 
-            for (c = 0; c < imgcount; c++) {
+                if (positive_tags.length > 0) {
+                    let skip = true;
+
+                    for (let tag of positive_tags) {
+                        if (tags[tag].includes(img.id)) {
+                            skip = false;
+                            console.log("skip = false");
+                            break;
+                        }
+                    }
+
+                    if (skip)
+                        continue;
+                }
+
+                if (negative_tags.length > 0) {
+                    let skip = false;
+
+                    for (let tag of negative_tags) {
+                        if (tags[tag].includes(img.id)) {
+                            skip = true;
+                            break;
+                        }
+                    }
+
+                    if (skip)
+                        continue;
+                }
+
+                let orig = img_swap ? img.draw : img.orig;
+                let draw = img_swap ? img.orig : img.draw;
+
                 let cell = document.createElement("div");
-                grid.push(cell);
-
-                cell.innerHTML = '<img src="' + orig + '/' + c + '.jpg" class="img img_bg"><img src="' + draw + '/' + c + '.jpg" class="img img_overlay">';
+                cell.innerHTML = '<img src="' + orig + '" class="img img_bg"><img src="' + draw + '" class="img img_overlay">';
                 container.appendChild(cell).className = "grid-item";
-            };
+            }
         }
 
         function swap() {
@@ -99,8 +171,56 @@
             makeRows();
         }
 
-        function start() {
+        function shuffle() {
+            shuffleArray(images);
             makeRows();
+        }
+
+        function swapTag(tag) {
+            console.log(tag);
+
+            if (positive_tags.includes(tag)) {
+                positive_tags = positive_tags.filter(i => i != tag);
+                negative_tags.push(tag);
+            }
+            else if (negative_tags.includes(tag)) {
+                negative_tags = negative_tags.filter(i => i != tag);
+            }
+            else {
+                positive_tags.push(tag);
+            }
+
+            updateTags();
+            makeRows();
+        }
+
+        function start() {
+            img_swap = true;
+            images = [];
+            positive_tags = [];
+            negative_tags = [];
+
+            for (let c = 1; c <= imgcount; c++) {
+                const img = {
+                    id: c,
+                    orig: orig_dir + '/' + c + '.jpg',
+                    draw: draw_dir + '/' + c + '.jpg',
+                };
+
+                images.push(img);
+            };
+
+            makeRows();
+            updateTags();
+        }
+
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
         }
 
         start();
