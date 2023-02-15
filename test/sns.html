@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        SNS topic generator
+    </title>
+</head>
+<body>
+
+    <div>
+        <label for="acc">Environment:</label>
+        <select name="acc" onchange="accSelect(this.value)">
+            <option>UP DEV</option>
+            <option>UP QA</option>
+            <option>UP PROD</option>
+            <option>US DEV</option>
+            <option>US QA</option>
+            <option>US PROD</option>
+            <option>Legacy QA</option>
+            <option>Legacy PROD</option>
+        </select>
+        <br>
+        <br>
+
+        <label for="name">Topic name:</label>
+        <input onchange="update()" name="name" />
+        <br>
+        <br>
+
+        <span style="font-weight:bold">Topic ARN: </span>
+        <span id="result">123</span>
+        <br>
+        <br>
+    </div>
+
+    <script>
+        let regions = {
+            'UP DEV': { region: 'eu-west-1', acc: '080007128336', env: 'ukdev' },
+            'UP QA': { region: 'eu-west-2', acc: '080007128336', env: 'ukort' },
+            'UP PROD': { region: 'eu-west-2', acc: '042278729031', env: 'ukprod' },
+            'US DEV': { region: 'us-east-2', acc: '080007128336', env: 'usdev' },
+            'US QA': { region: 'us-east-2', acc: '080007128336', env: 'usqa' },
+            'US PROD': { region: 'us-east-2', acc: '042278729031', env: 'usprod' },
+            'Legacy QA': { region: 'us-east-2', acc: '042278729031', env: 'l2lqa' },
+            'Legacy PROD': { region: 'us-east-2', acc: '042278729031', env: 'l2lprod' },
+        };
+
+        const account = document.getElementsByName('acc')[0];
+        const name = document.getElementsByName('name')[0];
+        const result = document.getElementById('result');
+
+        function update() {
+            let data = regions[account.value];
+
+            result.innerText = 'arn:aws:sns:' + data.region + ':' + data.acc + ':' + data.env + '-' + name.value;
+        }
+
+        function accSelect(acc) {
+            update();
+        }
+
+        accSelect('UP DEV');
+    </script>
+</body>
+</html>
