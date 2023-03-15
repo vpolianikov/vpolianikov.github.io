@@ -100,6 +100,7 @@
     <div id="preview_all">
         <div style="display: none; margin:4px;">
             <img style="width: 200px">
+            <p style="color:white">test</p>
         </div>
     </div>
 
@@ -170,6 +171,9 @@
                 img.onclick = () => {
                     sel(i);
                 };
+
+                let p = new_element.children.item(1);
+                p.innerText = "#" + i;
 
                 prevEle.after(new_element);
                 prevEle = new_element;
