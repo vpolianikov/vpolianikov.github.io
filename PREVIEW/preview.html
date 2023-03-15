@@ -31,7 +31,6 @@
 
     <div id="preview_1" hidden>
         <div>
-            <button onclick="goPriview()">back</button>
             <!--<button onclick="onL()"><</button>-->
             <span style="color:white" id="img-id">
                 1
@@ -40,12 +39,12 @@
         </div>
         <div style="display: inline-block">
             <img class="inner-image-vk" id="img-vk" />
-            <img src="./page_vk.png">
+            <img onclick="goPriview()" src="./page_vk.png">
         </div>
 
         <div style="display: inline-block">
             <img class="inner-image-inst" id="img-inst" />
-            <img src="./page_inst.png">
+            <img onclick="goPriview()" src="./page_inst.png">
         </div>
     </div>
 
@@ -73,7 +72,7 @@
             vk.src = './img/' + id + '.png';
             inst.src = './img/' + id + '.png';
             selected = id;
-            img_id.innerText = id;
+            img_id.innerText = '#' + id;
 
             preview_1.hidden = false;
             preview_all.hidden = true;
