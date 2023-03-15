@@ -1,5 +1,9 @@
 ﻿<!DOCTYPE html>
 <html>
+<!--<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>-->
+
 <body>
     <style>
         body {
@@ -27,6 +31,41 @@
             z-index: -1;
             /*opacity:0.5;*/
         }
+
+        .inner-image-vk-mob {
+            position: absolute;
+            top: 142px;
+            left: 45px;
+            width: 198px;
+            z-index: -1;
+        }
+
+        .inner-image-inst-mob {
+            position: absolute;
+            top: 416px;
+            left: 42px;
+            width: 191px;
+            z-index: -1;
+        }
+
+        .only-pc {
+            display: inline-block;
+        }
+
+        .only-mobile {
+            display: inline-block;
+        }
+
+        /*        @media only screen and (min-width: 768px) {
+
+            .only-pc {
+                display: inline-block;
+            }
+
+            .only-mobile {
+                display: none;
+            }
+        }*/
     </style>
 
     <div id="preview_1" hidden>
@@ -37,14 +76,24 @@
             </span>
             <!--<button onclick="onR()">></button>-->
         </div>
-        <div style="display: inline-block">
+        <div class="only-pc" style="width:100%">
             <img class="inner-image-vk" id="img-vk" />
             <img onclick="goPriview()" src="./page_vk.png">
         </div>
 
-        <div style="display: inline-block">
+        <div class="only-pc">
             <img class="inner-image-inst" id="img-inst" />
             <img onclick="goPriview()" src="./page_inst.png">
+        </div>
+
+        <div class="only-mobile">
+            <img class="inner-image-vk-mob" id="img-vk-mob" />
+            <img onclick="goPriview()" src="./mobile_vk.png">
+        </div>
+
+        <div class="only-mobile">
+            <img class="inner-image-inst-mob" id="img-inst-mob" />
+            <img onclick="goPriview()" src="./mobile_inst.png">
         </div>
     </div>
 
@@ -55,10 +104,12 @@
     </div>
 
     <script>
-        const max_count = 90;
+        const max_count = 96;
 
         const vk = document.getElementById('img-vk');
         const inst = document.getElementById('img-inst');
+        const vk_mob = document.getElementById('img-vk-mob');
+        const inst_mob = document.getElementById('img-inst-mob');
         const img_id = document.getElementById('img-id');
 
         const preview_1 = document.getElementById('preview_1');
@@ -69,8 +120,13 @@
         let selected = 0;
 
         function sel(id) {
-            vk.src = './img/' + id + '.png';
-            inst.src = './img/' + id + '.png';
+            let img = './img/' + id + '.png';
+
+            vk.src = img;
+            inst.src = img;
+            vk_mob.src = img;
+            inst_mob.src = img;
+
             selected = id;
             img_id.innerText = '#' + id;
 
