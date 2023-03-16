@@ -68,40 +68,11 @@
         }*/
     </style>
 
-    <div id="preview_1" hidden>
-        <div>
-            <!--<button onclick="onL()"><</button>-->
-            <span style="color:white" id="img-id">
-                1
-            </span>
-            <!--<button onclick="onR()">></button>-->
-        </div>
-
-        <div class="only-mobile">
-            <img class="inner-image-vk-mob" id="img-vk-mob" />
-            <img onclick="goPriview()" src="./mobile_vk.png">
-        </div>
-
-        <div class="only-mobile">
-            <img class="inner-image-inst-mob" id="img-inst-mob" />
-            <img onclick="goPriview()" src="./mobile_inst.png">
-        </div>
-
-        <div class="only-pc" style="width:100%">
-            <img class="inner-image-vk" id="img-vk" />
-            <img onclick="goPriview()" src="./page_vk.png">
-        </div>
-
-        <div class="only-pc">
-            <img class="inner-image-inst" id="img-inst" />
-            <img onclick="goPriview()" src="./page_inst.png">
-        </div>
-        <br />
-    </div>
-
     <div id="preview_all">
         <div style="display: none; margin:4px;">
-            <img style="width: 200px">
+            <a>
+                <img style="width: 200px">
+            </a>
             <p style="color:white">test</p>
         </div>
     </div>
@@ -109,56 +80,7 @@
     <script>
         const max_count = 96;
 
-        const vk = document.getElementById('img-vk');
-        const inst = document.getElementById('img-inst');
-        const vk_mob = document.getElementById('img-vk-mob');
-        const inst_mob = document.getElementById('img-inst-mob');
-        const img_id = document.getElementById('img-id');
-
-        const preview_1 = document.getElementById('preview_1');
-        const preview_all = document.getElementById('preview_all');
-
         const img_btn_orig = preview_all.firstElementChild;
-
-        let selected = 0;
-
-        function sel(id) {
-            let img = './img/' + id + '.png';
-
-            vk.src = img;
-            inst.src = img;
-            vk_mob.src = img;
-            inst_mob.src = img;
-
-            selected = id;
-            img_id.innerText = '#' + id;
-
-            preview_1.hidden = false;
-            preview_all.hidden = true;
-        }
-
-        function onL() {
-            let id = selected - 1;
-
-            if (id < 1)
-                id = max_count;
-
-            sel(id);
-        }
-
-        function onR() {
-            let id = selected + 1;
-
-            if (id > max_count)
-                id = 1;
-
-            sel(id);
-        }
-
-        function goPriview() {
-            preview_1.hidden = true;
-            preview_all.hidden = false;
-        }
 
         function updateImgs() {
             let prevEle = img_btn_orig;
@@ -167,12 +89,12 @@
                 let new_element = img_btn_orig.cloneNode(true);
                 new_element.style.display = 'inline-block';
 
-                let img = new_element.children.item(0);
+                let a = new_element.children.item(0);
+                a.href = "./preview1.html?id=" + i;
+
+                let img = a.firstElementChild;
                 img.src = './img/' + i + '.png';
-                img.title = i;
-                img.onclick = () => {
-                    sel(i);
-                };
+                //img.title = i;
 
                 let p = new_element.children.item(1);
                 p.innerText = "#" + i;
