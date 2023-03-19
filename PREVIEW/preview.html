@@ -70,10 +70,10 @@
 
     <div id="preview_all">
         <div style="display: none; margin:4px;">
-            <a>
+            <a style="color: white; text-decoration: none">
                 <img style="width: 220px">
+                <p>test</p>
             </a>
-            <p style="color:white">test</p>
         </div>
     </div>
 
@@ -96,7 +96,7 @@
                 img.src = './img/' + i + '.png';
                 //img.title = i;
 
-                let p = new_element.children.item(1);
+                let p = a.children.item(1);
                 p.innerText = "#" + i;
 
                 prevEle.after(new_element);
