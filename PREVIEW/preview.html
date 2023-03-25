@@ -70,21 +70,31 @@
 
     <div id="preview_all">
         <div style="display: none; margin:4px;">
-            <a style="color: white; text-decoration: none">
+            <a style="color: white; text-decoration: none; font-size: 24px; ">
                 <img style="width: 220px">
                 <p>test</p>
             </a>
         </div>
+
+        <hr />
+        <p style="color: white; font-size:36px;">Которые получили хоть 1 голос</p>
+        <hr />
+        <div id="best"></div>
+        <hr />
+        <p style="color: white; font-size:36px;">Прочие</p>
+        <hr />
+        <div id="other"></div>
     </div>
 
     <script>
         const max_count = 115;
+        const bestDiv = document.getElementById('best');
+        const otherDiv = document.getElementById('other');
+        const fav = [2, 6, 9, 92, 44, 85, 71, 48, 90, 59];
 
         const img_btn_orig = preview_all.firstElementChild;
 
         function updateImgs() {
-            let prevEle = img_btn_orig;
-
             for (let i = 1; i <= max_count; i++) {
                 let new_element = img_btn_orig.cloneNode(true);
                 new_element.style.display = 'inline-block';
@@ -99,8 +109,11 @@
                 let p = a.children.item(1);
                 p.innerText = "#" + i;
 
-                prevEle.after(new_element);
-                prevEle = new_element;
+                if (fav.includes(i)) {
+                    bestDiv.appendChild(new_element);
+                } else {
+                    otherDiv.appendChild(new_element);
+                }
             }
         }
 
